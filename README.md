@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="assets/logo.png" alt="Islamic APIs Hub Logo" width="220" />
+
 # 🕌 Islamic APIs Hub & Registry
 
 **The definitive, curated registry and developer hub of authentic, high-performance Islamic APIs, libraries, and datasets.**
