@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "IslamCave Prayer Times API",
+  "version": "1.0.0",
+  "category": "Prayer Times & Calendar APIs",
+  "description": "A streamlined, zero-configuration GET REST API that delivers all five daily Islamic prayers, sunrise, and Qibla compass bearing globally using coordinates without requiring an API key. Includes both ISO-8601 UTC timestamps and pre-formatted 12-hour local time strings.",
+  "website": "https://islamcave.com",
+  "documentation": "https://islamcave.com/developers/api",
+  "baseUrl": "https://islamcave.com/api",
+  "authentication": {
+    "type": "none",
+    "required": false,
+    "description": "No API key or registration is required. Requires attribution query parameter: attribution=islamcave.com."
+  },
+  "attributionRequirement": {
+    "required": true,
+    "param": "attribution=islamcave.com",
+    "display": "Powered by IslamCave",
+    "link": "https://islamcave.com"
+  },
+  "rateLimit": {
+    "policy": "Free public access. Recommended for web and mobile client applications with basic client caching."
+  },
+  "format": "JSON",
+  "endpoints": [
+    {
+      "name": "Get Prayer Times and Qibla",
+      "path": "/prayer-times",
+      "method": "GET",
+      "description": "Calculates Fajr, Sunrise, Dhuhr, Asr, Maghrib, Isha, and Qibla angle for the given coordinates.",
+      "parameters": [
+        {
+          "name": "latitude",
+          "in": "query",
+          "type": "number",
+          "required": true,
+          "example": 40.7128,
+          "description": "Latitude coordinate of the location"
+        },
+        {
+          "name": "longitude",
+          "in": "query",
+          "type": "number",
+          "required": true,
+          "example": -74.006,
+          "description": "Longitude coordinate of the location"
+        },
+        {
+          "name": "attribution",
+          "in": "query",
+          "type": "string",
+          "required": true,
+          "default": "islamcave.com",
+          "example": "islamcave.com",
+          "description": "Mandatory attribution token declaring usage"
+        }
+      ],
+      "sampleResponse": {
+        "status": "success",
+        "data": {
+          "coordinates": {
+            "latitude": 40.7128,
+            "longitude": -74.006
+          },
+          "date": "2026-10-12",
+          "method": "MWL",
+          "madhab": "shafi",
+          "times": {
+            "fajr": "2026-10-12T09:33:00.000Z",
+            "sunrise": "2026-10-12T11:04:00.000Z",
+            "dhuhr": "2026-10-12T16:43:00.000Z",
+            "asr": "2026-10-12T19:49:00.000Z",
+            "maghrib": "2026-10-12T22:20:00.000Z",
+            "isha": "2026-10-12T23:46:00.000Z"
+          },
+          "formatted": {
+            "fajr": "9:33 AM",
+            "sunrise": "11:04 AM",
+            "dhuhr": "4:43 PM",
+            "asr": "7:49 PM",
+            "maghrib": "10:20 PM",
+            "isha": "11:46 PM"
+          },
+          "qibla": 58.48169650089118
+        },
+        "attribution": {
+          "required": true,
+          "text": "Powered by IslamCave",
+          "link": "https://islamcave.com",
+          "message": "Thank you for attributing IslamCave!"
+        },
+        "meta": {
+          "timestamp": "2026-10-12T20:46:13.874Z",
+          "version": "1.0",
+          "documentation": "https://islamcave.com/developers/api"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Quran Tafseer API",
+  "version": "1.0.0",
+  "category": "Tafsir & Quran Commentary APIs",
+  "description": "Specialized, lightweight RESTful Quranic exegesis (Tafseer) API providing classical and modern commentaries by renowned scholars in Arabic and multiple languages, indexed by Surah and Ayah number ranges.",
+  "website": "http://quran-tafseer.com",
+  "documentation": "http://api.quran-tafseer.com",
+  "baseUrl": "http://api.quran-tafseer.com",
+  "authentication": {
+    "type": "none",
+    "required": false,
+    "description": "Public, keyless open API."
+  },
+  "rateLimit": {
+    "policy": "Standard open web rate limits."
+  },
+  "format": "JSON",
+  "endpoints": [
+    {
+      "name": "List All Quran Chapters (Surahs)",
+      "path": "/quran",
+      "method": "GET",
+      "description": "Returns list of all 114 Surahs with metadata, IDs, and verse counts."
+    },
+    {
+      "name": "List All Available Tafseers",
+      "path": "/tafseer",
+      "method": "GET",
+      "description": "Returns all available Tafsir editions with their IDs, scholar names, languages, and descriptions (e.g. Tafsir Ibn Kathir, Al-Muyassar, Al-Jalalayn, Al-Sa'di, Al-Baghawi, Al-Qurtubi, Tanweer al-Miqbas)."
+    },
+    {
+      "name": "Get Verse Tafseer",
+      "path": "/tafseer/{tafseer_id}/{sura_number}/{ayah_number}",
+      "method": "GET",
+      "description": "Retrieves the commentary text of a single specific verse.",
+      "parameters": [
+        { "name": "tafseer_id", "in": "path", "type": "integer", "required": true, "example": 1, "description": "Tafsir edition ID (e.g. 1 for Al-Muyassar)" },
+        { "name": "sura_number", "in": "path", "type": "integer", "required": true, "example": 1, "description": "Surah index (1-114)" },
+        { "name": "ayah_number", "in": "path", "type": "integer", "required": true, "example": 1, "description": "Ayah index" }
+      ]
+    },
+    {
+      "name": "Get Verse Tafseer Range",
+      "path": "/tafseer/{tafseer_id}/{sura_number}/{ayah_number_from}/{ayah_number_to}",
+      "method": "GET",
+      "description": "Retrieves commentary for a contiguous range of verses within a single Surah.",
+      "parameters": [
+        { "name": "tafseer_id", "in": "path", "type": "integer", "required": true, "example": 1 },
+        { "name": "sura_number", "in": "path", "type": "integer", "required": true, "example": 2 },
+        { "name": "ayah_number_from", "in": "path", "type": "integer", "required": true, "example": 1 },
+        { "name": "ayah_number_to", "in": "path", "type": "integer", "required": true, "example": 5 }
+      ]
+    }
+  ]
+}

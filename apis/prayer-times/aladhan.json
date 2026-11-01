@@ -1,0 +1,164 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "AlAdhan Prayer Times API",
+  "version": "1.0.0",
+  "category": "Prayer Times & Calendar APIs",
+  "description": "Dedicated, battle-tested RESTful API offering global prayer times calculations, monthly/yearly calendars, Hijri-to-Gregorian date conversions, Qibla compass bearing, and Asma Al-Husna. Supports lookups by geographic coordinates, city name, or address string with extensive customization options.",
+  "website": "https://aladhan.com",
+  "documentation": "https://aladhan.com/prayer-times-api",
+  "baseUrl": "https://api.aladhan.com/v1",
+  "authentication": {
+    "type": "none",
+    "required": false,
+    "description": "Public, keyless API. No token or registration required."
+  },
+  "rateLimit": {
+    "policy": "Open access with generous throttling. Client-side caching of prayer timetables for 24 hours is strongly recommended."
+  },
+  "format": "JSON",
+  "responseEnvelope": {
+    "code": "integer (HTTP status, e.g. 200)",
+    "status": "string (e.g. 'OK')",
+    "data": "object | array"
+  },
+  "calculationMethods": [
+    { "id": 1, "name": "University of Islamic Sciences, Karachi" },
+    { "id": 2, "name": "Islamic Society of North America (ISNA)" },
+    { "id": 3, "name": "Muslim World League (MWL)" },
+    { "id": 4, "name": "Umm Al-Qura University, Makkah" },
+    { "id": 5, "name": "Egyptian General Authority of Survey" },
+    { "id": 7, "name": "Institute of Geophysics, University of Tehran" },
+    { "id": 8, "name": "Gulf Region" },
+    { "id": 9, "name": "Kuwait" },
+    { "id": 10, "name": "Qatar" },
+    { "id": 11, "name": "Majlis Ugama Islam Singapura, Singapore" },
+    { "id": 12, "name": "Union Organization Islamic de France" },
+    { "id": 13, "name": "Diyanet İşleri Başkanlığı, Turkey" },
+    { "id": 14, "name": "Spiritual Administration of Muslims of Russia" },
+    { "id": 15, "name": "Moonsighting Committee Worldwide" },
+    { "id": 16, "name": "Dubai (unofficial)" },
+    { "id": 17, "name": "Jabatan Kemajuan Islam Malaysia (JAKIM)" },
+    { "id": 18, "name": "Tunisia" },
+    { "id": 19, "name": "Algeria (Algerian Ministry of Religious Affairs and Wakfs)", "authority": "Algerian Ministry of Religious Affairs and Wakfs", "params": { "Fajr": 18, "Isha": 17 }, "description": "Algerian Ministry of Religious Affairs and Wakfs. Uses standard Fajr angle of 18° and Isha angle of 17°." },
+    { "id": 20, "name": "KEMENAG - Kementerian Agama Republik Indonesia" },
+    { "id": 21, "name": "Morocco" },
+    { "id": 22, "name": "Comunidade Islamica de Lisboa" },
+    { "id": 23, "name": "Ministry of Awqaf, Islamic Affairs and Holy Places, Jordan" },
+    { "id": 99, "name": "Custom Method (pass methodSettings=FajrAngle,MaghribAngleOrMins,IshaAngleOrMins)" }
+  ],
+  "endpoints": [
+    {
+      "name": "Timings by Coordinates",
+      "path": "/timings/{date}",
+      "method": "GET",
+      "description": "Returns prayer times for a specific date (or current date if omitted or set to today) given geographic coordinates.",
+      "parameters": [
+        { "name": "date", "in": "path", "type": "string", "required": false, "example": "2026-10-12", "description": "Date formatted as DD-MM-YYYY or YYYY-MM-DD or Unix timestamp. Defaults to current date if omitted." },
+        { "name": "latitude", "in": "query", "type": "number", "required": true, "example": 51.508515 },
+        { "name": "longitude", "in": "query", "type": "number", "required": true, "example": -0.1254872 },
+        { "name": "method", "in": "query", "type": "integer", "required": false, "default": 3, "description": "Calculation method ID" },
+        { "name": "shafaq", "in": "query", "type": "string", "required": false, "enum": ["general", "ahmer", "abyad"] },
+        { "name": "tune", "in": "query", "type": "string", "required": false, "example": "0,0,0,0,0,0,0,0,0", "description": "Comma-separated minute offsets for [Imsak, Fajr, Sunrise, Dhuhr, Asr, Maghrib, Sunset, Isha, Midnight]" },
+        { "name": "school", "in": "query", "type": "integer", "required": false, "default": 0, "enum": [0, 1], "description": "0 = Shafi (standard), 1 = Hanafi" },
+        { "name": "midnightMode", "in": "query", "type": "integer", "required": false, "default": 0, "enum": [0, 1], "description": "0 = Standard (Sunset to Sunrise), 1 = Jafari (Sunset to Fajr)" },
+        { "name": "timezonestring", "in": "query", "type": "string", "required": false, "example": "Europe/London" },
+        { "name": "latitudeAdjustmentMethod", "in": "query", "type": "integer", "required": false, "enum": [1, 2, 3], "description": "1 = Middle of the Night, 2 = One Seventh, 3 = Angle Based" },
+        { "name": "adjustment", "in": "query", "type": "integer", "required": false, "description": "Number of days to adjust Hijri date by (e.g. 1 or -1)" },
+        { "name": "iso8601", "in": "query", "type": "boolean", "required": false, "default": false, "description": "Return times formatted in ISO-8601 strings" }
+      ]
+    },
+    {
+      "name": "Timings by City",
+      "path": "/timingsByCity/{date}",
+      "method": "GET",
+      "description": "Returns prayer times for a city and country.",
+      "parameters": [
+        { "name": "date", "in": "path", "type": "string", "required": false, "example": "2026-10-12" },
+        { "name": "city", "in": "query", "type": "string", "required": true, "example": "London" },
+        { "name": "country", "in": "query", "type": "string", "required": true, "example": "United Kingdom" },
+        { "name": "state", "in": "query", "type": "string", "required": false, "example": "Greater London" },
+        { "name": "method", "in": "query", "type": "integer", "required": false, "default": 3 },
+        { "name": "school", "in": "query", "type": "integer", "required": false, "default": 0 }
+      ]
+    },
+    {
+      "name": "Timings by Address",
+      "path": "/timingsByAddress/{date}",
+      "method": "GET",
+      "description": "Returns prayer times for any free-form string address resolved by geocoding.",
+      "parameters": [
+        { "name": "date", "in": "path", "type": "string", "required": false, "example": "2026-10-12" },
+        { "name": "address", "in": "query", "type": "string", "required": true, "example": "10 Downing Street, London, UK" },
+        { "name": "method", "in": "query", "type": "integer", "required": false, "default": 3 }
+      ]
+    },
+    {
+      "name": "Calendar by Coordinates",
+      "path": "/calendar/{year}/{month}",
+      "method": "GET",
+      "description": "Returns a full month or full year calendar of prayer times based on coordinates.",
+      "parameters": [
+        { "name": "year", "in": "path", "type": "integer", "required": true, "example": 2026 },
+        { "name": "month", "in": "path", "type": "integer", "required": true, "example": 10 },
+        { "name": "latitude", "in": "query", "type": "number", "required": true, "example": 51.508515 },
+        { "name": "longitude", "in": "query", "type": "number", "required": true, "example": -0.1254872 },
+        { "name": "method", "in": "query", "type": "integer", "required": false, "default": 3 },
+        { "name": "annual", "in": "query", "type": "boolean", "required": false, "default": false, "description": "Set to true to return the whole year" }
+      ]
+    },
+    {
+      "name": "Calendar by City",
+      "path": "/calendarByCity/{year}/{month}",
+      "method": "GET",
+      "description": "Returns a full month prayer timetable for a given city and country.",
+      "parameters": [
+        { "name": "year", "in": "path", "type": "integer", "required": true, "example": 2026 },
+        { "name": "month", "in": "path", "type": "integer", "required": true, "example": 10 },
+        { "name": "city", "in": "query", "type": "string", "required": true, "example": "Paris" },
+        { "name": "country", "in": "query", "type": "string", "required": true, "example": "France" },
+        { "name": "method", "in": "query", "type": "integer", "required": false, "default": 12 }
+      ]
+    },
+    {
+      "name": "Gregorian to Hijri Date Conversion",
+      "path": "/gToH/{date}",
+      "method": "GET",
+      "description": "Converts a Gregorian date (DD-MM-YYYY) into its exact Hijri calendar counterpart.",
+      "parameters": [
+        { "name": "date", "in": "path", "type": "string", "required": true, "example": "12-10-2026" },
+        { "name": "adjustment", "in": "query", "type": "integer", "required": false }
+      ]
+    },
+    {
+      "name": "Hijri to Gregorian Date Conversion",
+      "path": "/hToG/{date}",
+      "method": "GET",
+      "description": "Converts a Hijri date (DD-MM-YYYY) into its Gregorian calendar equivalent.",
+      "parameters": [
+        { "name": "date", "in": "path", "type": "string", "required": true, "example": "01-05-1448" }
+      ]
+    },
+    {
+      "name": "Qibla Direction",
+      "path": "/qibla/{latitude}/{longitude}",
+      "method": "GET",
+      "description": "Returns the Qibla compass bearing clockwise in degrees from True North.",
+      "parameters": [
+        { "name": "latitude", "in": "path", "type": "number", "required": true, "example": 51.508515 },
+        { "name": "longitude", "in": "path", "type": "number", "required": true, "example": -0.1254872 }
+      ]
+    },
+    {
+      "name": "Get Calculation Methods",
+      "path": "/methods",
+      "method": "GET",
+      "description": "Lists all official calculation methods and their detailed parameter settings."
+    },
+    {
+      "name": "Get 99 Names of Allah",
+      "path": "/asmaAlHusna",
+      "method": "GET",
+      "description": "Returns all 99 Names of Allah with transliteration, Arabic text, and English translation."
+    }
+  ]
+}

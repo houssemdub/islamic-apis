@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Kalimat Prayer Times API",
+  "version": "2.0.0",
+  "category": "Prayer Times & Calendar APIs",
+  "description": "Enterprise-grade prayer times infrastructure trusted by high-traffic platforms. Accepts latitude, longitude, and ISO country code to automatically resolve the nearest supported city within that country, returning precise daily prayer timetables in the resolved city's local timezone for today, a single date, or date ranges.",
+  "website": "https://kalimat.dev",
+  "documentation": "https://kalimat.dev",
+  "baseUrl": "https://api.kalimat.dev/api/v2",
+  "authentication": {
+    "type": "apiKey",
+    "headerName": "X-Api-Key",
+    "required": true,
+    "description": "Requires an API key passed in the X-Api-Key HTTP header. Keys can be requested via info@kalimat.dev."
+  },
+  "rateLimit": {
+    "policy": "Tiered by enterprise subscription with high-availability SLAs."
+  },
+  "format": "JSON",
+  "endpoints": [
+    {
+      "name": "Get Prayer Times",
+      "path": "/prayer-times",
+      "method": "GET",
+      "description": "Retrieves prayer times for today, a specific Gregorian date, or a date range by resolving nearest supported city.",
+      "headers": [
+        {
+          "name": "X-Api-Key",
+          "type": "string",
+          "required": true,
+          "description": "Your Kalimat API key"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "lat",
+          "in": "query",
+          "type": "number",
+          "required": true,
+          "example": 24.65,
+          "description": "Latitude coordinate"
+        },
+        {
+          "name": "lng",
+          "in": "query",
+          "type": "number",
+          "required": true,
+          "example": 46.71,
+          "description": "Longitude coordinate"
+        },
+        {
+          "name": "country_code",
+          "in": "query",
+          "type": "string",
+          "required": true,
+          "example": "SA",
+          "description": "ISO 3166-1 alpha-2 country code (e.g. SA, US, GB, EG)"
+        },
+        {
+          "name": "date",
+          "in": "query",
+          "type": "string",
+          "required": false,
+          "example": "2026-10-12",
+          "description": "Specific date (YYYY-MM-DD). Mutually exclusive with start_date/end_date. Omit for today."
+        },
+        {
+          "name": "start_date",
+          "in": "query",
+          "type": "string",
+          "required": false,
+          "example": "2026-10-01",
+          "description": "Start of date range (YYYY-MM-DD). Must be paired with end_date."
+        },
+        {
+          "name": "end_date",
+          "in": "query",
+          "type": "string",
+          "required": false,
+          "example": "2026-10-31",
+          "description": "End of date range (YYYY-MM-DD). Must be paired with start_date."
+        }
+      ],
+      "sampleResponse": {
+        "data": {
+          "matchedLocation": {
+            "name": "Saudi Arabia, Riyadh",
+            "countryCode": "SA",
+            "timezone": "Asia/Riyadh",
+            "latitude": 24.65,
+            "longitude": 46.71,
+            "distanceKm": 7.87
+          },
+          "period": {
+            "startDate": "2026-10-12",
+            "endDate": "2026-10-12",
+            "defaultedToToday": true
+          },
+          "days": [
+            {
+              "date": "2026-10-12",
+              "times": {
+                "fajr": "04:31",
+                "sunrise": "05:48",
+                "dhuhr": "11:42",
+                "asr": "15:02",
+                "maghrib": "17:35",
+                "isha": "19:05"
+              }
+            }
+          ]
+        },
+        "meta": {
+          "version": "2.0"
+        }
+      }
+    },
+    {
+      "name": "Get Prayer Times Data Version",
+      "path": "/prayer-times/version",
+      "method": "GET",
+      "description": "Returns version and build metadata of the underlying prayer times calculation dataset.",
+      "headers": [
+        {
+          "name": "X-Api-Key",
+          "type": "string",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

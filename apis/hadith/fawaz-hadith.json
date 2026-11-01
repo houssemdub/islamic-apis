@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Fawaz Ahmed Hadith API",
+  "version": "1.0.0",
+  "category": "Hadith & Prophetic Traditions",
+  "description": "High-speed, CDN-backed static JSON Hadith API providing complete collections of the canonical Kutub al-Sittah and other primary Hadith works. Includes full Arabic texts, multi-language translations (English, Urdu, Bengali, French, etc.), chapters/sections breakdown, and scholarly authenticity gradings (Sahih, Hasan, Da'if).",
+  "website": "https://github.com/fawazahmed0/hadith-api",
+  "documentation": "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/info.json",
+  "baseUrl": "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1",
+  "fallbackBaseUrl": "https://raw.githubusercontent.com/fawazahmed0/hadith-api/1",
+  "authentication": {
+    "type": "none",
+    "required": false,
+    "description": "Public, keyless jsDelivr CDN API."
+  },
+  "rateLimit": {
+    "policy": "Unlimited via jsDelivr CDN edge network."
+  },
+  "format": "JSON",
+  "endpoints": [
+    {
+      "name": "API & Books Overview",
+      "path": "/info.json",
+      "method": "GET",
+      "description": "Returns metadata regarding supported books, grades, languages, and dataset statistics."
+    },
+    {
+      "name": "List All Editions",
+      "path": "/editions.json",
+      "method": "GET",
+      "description": "Returns dictionary of all available Hadith edition keys categorized by language and author (e.g. 'eng-bukhari', 'ara-muslim', 'urd-abudawud')."
+    },
+    {
+      "name": "Get Full Hadith Book / Edition",
+      "path": "/editions/{editionName}.json",
+      "method": "GET",
+      "description": "Retrieves the complete edition with all contained hadiths, metadata, and chapter indices.",
+      "parameters": [
+        { "name": "editionName", "in": "path", "type": "string", "required": true, "example": "eng-bukhari" }
+      ]
+    },
+    {
+      "name": "Get Specific Hadith by Number",
+      "path": "/editions/{editionName}/{hadithNo}.json",
+      "method": "GET",
+      "description": "Retrieves a single hadith record by its sequential number in the edition.",
+      "parameters": [
+        { "name": "editionName", "in": "path", "type": "string", "required": true, "example": "eng-bukhari" },
+        { "name": "hadithNo", "in": "path", "type": "integer", "required": true, "example": 1 }
+      ]
+    },
+    {
+      "name": "Get Section / Chapter Hadiths",
+      "path": "/editions/{editionName}/sections/{sectionNo}.json",
+      "method": "GET",
+      "description": "Retrieves all hadiths falling within a specific chapter or thematic book section.",
+      "parameters": [
+        { "name": "editionName", "in": "path", "type": "string", "required": true, "example": "eng-bukhari" },
+        { "name": "sectionNo", "in": "path", "type": "integer", "required": true, "example": 1 }
+      ]
+    }
+  ]
+}

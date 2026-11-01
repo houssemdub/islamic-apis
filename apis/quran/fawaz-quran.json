@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Fawaz Ahmed Quran API",
+  "version": "1.0.0",
+  "category": "Quran Text, Audio & Search APIs",
+  "description": "High-speed, CDN-backed static REST-style JSON Quran API providing access to the Holy Quran in original Arabic, 440+ translations across 90+ languages, transliterations, and structural divisions (Juz, Surah, Ayah, Ruku, Sajda, Pages). Hosted on jsDelivr with infinite scaling.",
+  "website": "https://github.com/fawazahmed0/quran-api",
+  "documentation": "https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/quran.json",
+  "baseUrl": "https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1",
+  "fallbackBaseUrl": "https://raw.githubusercontent.com/fawazahmed0/quran-api/1",
+  "authentication": {
+    "type": "none",
+    "required": false,
+    "description": "Public, keyless jsDelivr CDN API."
+  },
+  "rateLimit": {
+    "policy": "Unlimited edge CDN caching."
+  },
+  "format": "JSON",
+  "endpoints": [
+    {
+      "name": "List All Editions",
+      "path": "/editions.json",
+      "method": "GET",
+      "description": "Returns all 440+ translation and recitation editions with language, author, direction, and edition slug."
+    },
+    {
+      "name": "Get Complete Quran Edition",
+      "path": "/editions/{editionName}.json",
+      "method": "GET",
+      "description": "Returns all 6,236 verses for a given edition in a single request.",
+      "parameters": [
+        { "name": "editionName", "in": "path", "type": "string", "required": true, "example": "eng-abdelhaleem" }
+      ]
+    },
+    {
+      "name": "Get Full Chapter (Surah)",
+      "path": "/editions/{editionName}/{chapterNo}.json",
+      "method": "GET",
+      "description": "Returns all verses of a specified Surah.",
+      "parameters": [
+        { "name": "editionName", "in": "path", "type": "string", "required": true, "example": "ara-quranuthmani" },
+        { "name": "chapterNo", "in": "path", "type": "integer", "required": true, "example": 1 }
+      ]
+    },
+    {
+      "name": "Get Specific Verse (Ayah)",
+      "path": "/editions/{editionName}/{chapterNo}/{verseNo}.json",
+      "method": "GET",
+      "description": "Returns a single Ayah by chapter and verse number.",
+      "parameters": [
+        { "name": "editionName", "in": "path", "type": "string", "required": true, "example": "eng-abdelhaleem" },
+        { "name": "chapterNo", "in": "path", "type": "integer", "required": true, "example": 1 },
+        { "name": "verseNo", "in": "path", "type": "integer", "required": true, "example": 1 }
+      ]
+    },
+    {
+      "name": "Get Juz",
+      "path": "/editions/{editionName}/juz/{juzNo}.json",
+      "method": "GET",
+      "description": "Returns all verses within a given Juz (1-30).",
+      "parameters": [
+        { "name": "editionName", "in": "path", "type": "string", "required": true, "example": "eng-abdelhaleem" },
+        { "name": "juzNo", "in": "path", "type": "integer", "required": true, "example": 1 }
+      ]
+    }
+  ]
+}

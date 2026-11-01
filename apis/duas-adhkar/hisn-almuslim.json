@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Hisn al-Muslim & Azkar API",
+  "version": "1.0.0",
+  "category": "Duas & Daily Remembrances (Adhkar)",
+  "description": "Structured open-source API and CDN dataset for Hisn al-Muslim (Fortress of the Muslim) supplications and daily Azkar (Morning & Evening, Sleep, Prayer, Travel, Protection). Features Arabic text with full tashkeel, English & multilingual translations, transliterations, repetitions counter, and audio recitations.",
+  "website": "https://github.com/rn0x/hisn_almuslim_json",
+  "documentation": "https://raw.githubusercontent.com/rn0x/hisn_almuslim_json/main/hisn_almuslim.json",
+  "baseUrl": "https://raw.githubusercontent.com/rn0x/hisn_almuslim_json/main",
+  "fallbackBaseUrl": "https://cdn.jsdelivr.net/gh/rn0x/hisn_almuslim_json@main",
+  "authentication": {
+    "type": "none",
+    "required": false,
+    "description": "Public, keyless open access."
+  },
+  "rateLimit": {
+    "policy": "Unlimited via CDN edge caching."
+  },
+  "format": "JSON",
+  "endpoints": [
+    {
+      "name": "Complete Fortress of the Muslim (Arabic)",
+      "path": "/hisn_almuslim.json",
+      "method": "GET",
+      "description": "Returns the complete database of 132+ chapters and hundreds of authentic supplications with Arabic vocalized text, repetition count, reference citations, and audio URLs."
+    },
+    {
+      "name": "Hisn al-Muslim (English / Multilingual)",
+      "path": "/hisn_almuslim_en.json",
+      "method": "GET",
+      "description": "Returns English translations and phonetic transliterations for all supplications."
+    }
+  ]
+}

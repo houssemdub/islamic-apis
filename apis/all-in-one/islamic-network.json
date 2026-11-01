@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Islamic Network",
+  "version": "1.0.0",
+  "category": "All-in-One & Multi-Service APIs",
+  "description": "The open-source digital infrastructure and API ecosystem for the global Islamic world. Provides free, keyless, open JSON APIs for AlAdhan (prayer times, Hijri calendars, Qibla), AlQuran Cloud (full ayahs, surahs, juzs, audio), Islamic Network CDN (streaming Quran audio and media), Sermons API (Khutbahs), and open-source SDKs.",
+  "website": "https://islamic.network",
+  "documentation": "https://islamic.network",
+  "statusPage": "https://status.islamic.network",
+  "github": "https://github.com/islamic-network",
+  "authentication": {
+    "type": "none",
+    "required": false,
+    "description": "Completely keyless and free to use. No sign-up, registration, or API keys required."
+  },
+  "rateLimit": {
+    "anonymous": "Generous open rate limits. Developers are requested to implement client-side caching (e.g. daily/monthly for prayer times, static for Quran text)."
+  },
+  "coreServices": [
+    {
+      "name": "AlAdhan API",
+      "domain": "aladhan.com",
+      "baseUrl": "https://api.aladhan.com/v1",
+      "purpose": "Accurate prayer times (coordinates, city, address), Hijri calendar conversions, Qibla calculations, and 99 Names of Allah.",
+      "documentation": "https://aladhan.com/prayer-times-api"
+    },
+    {
+      "name": "AlQuran Cloud API",
+      "domain": "alquran.cloud",
+      "baseUrl": "https://api.alquran.cloud/v1",
+      "purpose": "Comprehensive Quranic text, multi-language translations, word search, and verse-by-verse reciter data.",
+      "documentation": "https://alquran.cloud/api"
+    },
+    {
+      "name": "Islamic Network Audio & Media CDN",
+      "domain": "cdn.islamic.network",
+      "baseUrl": "https://cdn.islamic.network",
+      "purpose": "High-bandwidth global CDN delivering Quranic audio recitations across dozens of Qaris in MP3 format, plus Islamic typography and assets.",
+      "documentation": "https://cdn.islamic.network"
+    },
+    {
+      "name": "Sermons (Khutbas) API",
+      "domain": "sermons.islamic.network",
+      "baseUrl": "https://api.sermons.islamic.network/v1",
+      "purpose": "Aggregates authentic Friday sermons (Khutbas) issued by recognized Islamic authorities across different countries and languages.",
+      "documentation": "https://islamic.network"
+    }
+  ],
+  "sampleEndpoints": [
+    {
+      "service": "AlAdhan",
+      "path": "https://api.aladhan.com/v1/timingsByCity?city=London&country=United%20Kingdom",
+      "method": "GET",
+      "description": "Fetch prayer times by city and country"
+    },
+    {
+      "service": "AlAdhan",
+      "path": "https://api.aladhan.com/v1/qibla/51.508515/-0.1254872",
+      "method": "GET",
+      "description": "Fetch Qibla compass bearing for coordinates"
+    },
+    {
+      "service": "AlQuran Cloud",
+      "path": "https://api.alquran.cloud/v1/surah/1",
+      "method": "GET",
+      "description": "Fetch Surah Al-Fatiha in Arabic Uthmani text"
+    },
+    {
+      "service": "AlQuran Cloud",
+      "path": "https://api.alquran.cloud/v1/edition?format=audio",
+      "method": "GET",
+      "description": "List all audio reciter editions"
+    },
+    {
+      "service": "Audio CDN",
+      "path": "https://cdn.islamic.network/quran/audio/128/ar.alafasy/1.mp3",
+      "method": "GET",
+      "description": "Stream Al-Fatiha verse 1 recited by Mishary Rashid Alafasy (128kbps)"
+    }
+  ],
+  "officialSDKs": [
+    {
+      "name": "JavaScript / TypeScript SDK",
+      "ecosystem": "npm",
+      "packages": ["@islamic-network/aladhan", "@islamic-network/alquran"],
+      "platforms": ["React", "Next.js", "React Native", "Node.js"]
+    }
+  ]
+}

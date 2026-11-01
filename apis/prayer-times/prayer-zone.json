@@ -1,0 +1,246 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "PrayerZone Flutter & Dart Library",
+  "version": "0.0.7",
+  "category": "Prayer Times & Calendar APIs",
+  "description": "Powerful Flutter and Dart prayer calculation library and location engine providing 23 astronomical calculation methods with angle configurations (including Algerian Ministry of Religious Affairs and Wakfs: Fajr 18°, Isha 17°), 2 juristic Madhabs, and geocoded presets for 182 countries.",
+  "website": "https://pub.dev/packages/prayer_zone",
+  "documentation": "https://pub.dev/documentation/prayer_zone/latest/",
+  "repository": "https://github.com/ebrahimAburas/islamic",
+  "package": "prayer_zone",
+  "authentication": {
+    "type": "none",
+    "required": false,
+    "description": "Open source client library (MIT License). Runs offline on device without network latency."
+  },
+  "platforms": [
+    "Flutter (Android, iOS, Web, macOS, Windows, Linux)",
+    "Pure Dart (CLI, Server / Dart Frog, Backend)"
+  ],
+  "algerianCalculation": {
+    "methodKey": "algerian",
+    "enum": "PrayerCalculationMethod.algerian",
+    "authority": "Algerian Ministry of Religious Affairs and Wakfs",
+    "authorityArabic": "وزارة الشؤون الدينية والأوقاف الجزائرية",
+    "country": "Algeria",
+    "isoCode": "DZ",
+    "fajrAngle": 18.0,
+    "ishaAngle": 17.0,
+    "maghribAdjustmentMinutes": 0,
+    "defaultMadhab": "shafi",
+    "schoolNote": "Standard shadow length factor 1:1, aligned with the predominant Maliki school of jurisprudence in Algeria",
+    "description": "Algerian Ministry of Religious Affairs and Wakfs. Uses standard Fajr angle of 18° and Isha angle of 17°."
+  },
+  "calculationMethods": [
+    {
+      "key": "algerian",
+      "name": "Algerian Ministry of Religious Affairs and Wakfs",
+      "fajrAngle": 18.0,
+      "ishaAngle": 17.0,
+      "description": "Algerian Ministry of Religious Affairs and Wakfs. Uses standard Fajr angle of 18° and Isha angle of 17°."
+    },
+    {
+      "key": "muslim_world_league",
+      "name": "Muslim World League",
+      "fajrAngle": 18.0,
+      "ishaAngle": 17.0,
+      "description": "Muslim World League. Standard Fajr time with an angle of 18°. Earlier Isha time with an angle of 17°."
+    },
+    {
+      "key": "egyptian",
+      "name": "Egyptian General Authority of Survey",
+      "fajrAngle": 19.5,
+      "ishaAngle": 17.5,
+      "description": "Egyptian General Authority of Survey. Early Fajr time using an angle 19.5° and a slightly earlier Isha time using an angle of 17.5°."
+    },
+    {
+      "key": "french",
+      "name": "Union des Organisations Islamiques de France (UOIF)",
+      "fajrAngle": 12.0,
+      "ishaAngle": 12.0,
+      "description": "Union des Organisations Islamiques de France. Uses nautical twilight angles of 12° for both Fajr and Isha, resulting in later Fajr and earlier Isha times."
+    },
+    {
+      "key": "gulf_region",
+      "name": "Gulf Region Convention",
+      "fajrAngle": 19.5,
+      "ishaInterval": 90,
+      "description": "Gulf Region convention. Uses a Fajr angle of 19.5° and a fixed 90 minute interval after Maghrib for Isha."
+    },
+    {
+      "key": "indonesian",
+      "name": "Kementerian Agama Republik Indonesia (KEMENAG)",
+      "fajrAngle": 20.0,
+      "ishaAngle": 18.0,
+      "description": "Kementerian Agama Republik Indonesia (KEMENAG). Used in Indonesia. Early Fajr time with an angle of 20° and standard Isha time with an angle of 18°."
+    },
+    {
+      "key": "jafari",
+      "name": "Shia Ithna-Ashari, Leva Institute, Qum",
+      "fajrAngle": 16.0,
+      "ishaAngle": 14.0,
+      "maghribAngle": 4.0,
+      "description": "Shia Ithna-Ashari, Leva Institute, Qum. Uses a Fajr angle of 16°, Isha angle of 14°, and calculates Maghrib when the sun reaches 4° below the horizon."
+    },
+    {
+      "key": "jordan",
+      "name": "Ministry of Awqaf, Islamic Affairs and Holy Places, Jordan",
+      "fajrAngle": 18.0,
+      "ishaAngle": 18.0,
+      "maghribOffset": 5,
+      "description": "Ministry of Awqaf, Islamic Affairs and Holy Places, Jordan. Uses standard Fajr and Isha angles of 18° with a +5 minute Maghrib adjustment."
+    },
+    {
+      "key": "karachi",
+      "name": "University of Islamic Sciences, Karachi",
+      "fajrAngle": 18.0,
+      "ishaAngle": 18.0,
+      "description": "University of Islamic Sciences, Karachi. A generally applicable method that uses standard Fajr and Isha angles of 18°."
+    },
+    {
+      "key": "umm_al_qura",
+      "name": "Umm al-Qura University, Makkah",
+      "fajrAngle": 18.5,
+      "ishaInterval": 90,
+      "description": "Umm al-Qura University, Makkah. Uses a fixed interval of 90 minutes from maghrib to calculate Isha. And a slightly earlier Fajr time with an angle of 18.5°. Note: you should add a +30 minute custom adjustment for Isha during Ramadan."
+    },
+    {
+      "key": "dubai",
+      "name": "Dubai (UAE Convention)",
+      "fajrAngle": 18.2,
+      "ishaAngle": 18.2,
+      "description": "Used in the UAE. Slightly earlier Fajr time and slightly later Isha time with angles of 18.2° for Fajr and Isha in addition to 3 minute offsets for sunrise, Dhuhr, Asr, and Maghrib."
+    },
+    {
+      "key": "portugal",
+      "name": "Comunidade Islamica de Lisboa",
+      "fajrAngle": 18.0,
+      "ishaInterval": 77,
+      "maghribOffset": 3,
+      "description": "Comunidade Islamica de Lisboa. Uses a standard Fajr angle of 18° with a 77 minute fixed interval for Isha and a +3 minute Maghrib adjustment."
+    },
+    {
+      "key": "qatar",
+      "name": "Qatar Convention",
+      "fajrAngle": 18.0,
+      "ishaInterval": 90,
+      "description": "Same Isha interval as ummAlQura but with the standard Fajr time using an angle of 18°."
+    },
+    {
+      "key": "kuwait",
+      "name": "Kuwait Convention",
+      "fajrAngle": 18.0,
+      "ishaAngle": 17.5,
+      "description": "Standard Fajr time with an angle of 18°. Slightly earlier Isha time with an angle of 17.5°."
+    },
+    {
+      "key": "moonsighting_committee",
+      "name": "Moonsighting Committee Worldwide",
+      "fajrAngle": 18.0,
+      "ishaAngle": 18.0,
+      "description": "Method developed by Khalid Shaukat, founder of Moonsighting Committee Worldwide. Uses standard 18° angles for Fajr and Isha in addition to seasonal adjustment values (optional shafaq on parameters). This method automatically applies the 1/7 approximation rule for locations above 55° latitude. Recommended for North America and the UK."
+    },
+    {
+      "key": "moroccon",
+      "name": "Moroccan Ministry of Habous and Islamic Affairs",
+      "fajrAngle": 19.0,
+      "ishaAngle": 17.0,
+      "description": "Moroccan Ministry of Habous and Islamic Affairs. Uses Fajr angle of 19° and Isha angle of 17° with adjustments of -3 for sunrise, +5 for Dhuhr, and +5 for Maghrib."
+    },
+    {
+      "key": "russian",
+      "name": "Spiritual Administration of Muslims of Russia",
+      "fajrAngle": 16.0,
+      "ishaAngle": 15.0,
+      "description": "Spiritual Administration of Muslims of Russia. Uses a Fajr angle of 16° and Isha angle of 15°."
+    },
+    {
+      "key": "singapore",
+      "name": "Majlis Ugama Islam Singapura (MUIS)",
+      "fajrAngle": 20.0,
+      "ishaAngle": 18.0,
+      "dhuhrOffset": 1,
+      "description": "Used in Singapore, Malaysia, and Indonesia. Fajr 20°, Isha 18°, Dhuhr +1 min; minute rounding uses Rounding.up (may differ slightly from older nearest-minute behavior)."
+    },
+    {
+      "key": "tunisian",
+      "name": "Tunisian Ministry of Religious Affairs",
+      "fajrAngle": 18.0,
+      "ishaAngle": 18.0,
+      "description": "Tunisian Ministry of Religious Affairs. Uses standard Fajr and Isha angles of 18°."
+    },
+    {
+      "key": "turkey",
+      "name": "Diyanet İşleri Başkanlığı (Turkey Approximation)",
+      "description": "An approximation of the Diyanet method used in Turkey. This approximation is less accurate outside the region of Turkey."
+    },
+    {
+      "key": "tehran",
+      "name": "Institute of Geophysics, University of Tehran",
+      "fajrAngle": 17.7,
+      "ishaAngle": 14.0,
+      "maghribAngle": 4.5,
+      "description": "Institute of Geophysics, University of Tehran. Early Isha time with an angle of 14°. Slightly later Fajr time with an angle of 17.7°. Calculates Maghrib based on the sun reaching an angle of 4.5° below the horizon."
+    },
+    {
+      "key": "north_america",
+      "name": "Islamic Society of North America (ISNA)",
+      "fajrAngle": 15.0,
+      "ishaAngle": 15.0,
+      "description": "Also known as the ISNA method. Can be used for North America, but the moonsightingCommittee method is preferable. Gives later Fajr times and early Isha times with angles of 15°."
+    },
+    {
+      "key": "jakim",
+      "name": "Jabatan Kemajuan Islam Malaysia (JAKIM) / Custom Base",
+      "fajrAngle": 0.0,
+      "ishaAngle": 0.0,
+      "description": "Defaults to angles of 0°, should generally be used for making a custom method and setting your own values."
+    }
+  ],
+  "madhabs": [
+    {
+      "key": "shafi",
+      "name": "Shafi / Maliki / Hanbali",
+      "shadowFactor": 1,
+      "description": "Earlier Asr time. When an object's shadow equals the length of the object plus shadow at solar noon. Standard in North Africa (Algeria, Morocco, Tunisia) and Levant/Southeast Asia."
+    },
+    {
+      "key": "hanafi",
+      "name": "Hanafi",
+      "shadowFactor": 2,
+      "description": "Later Asr time. When an object's shadow equals twice the length of the object plus shadow at solar noon."
+    }
+  ],
+  "staticMethods": [
+    {
+      "name": "supportedCountries",
+      "signature": "List<Country> get supportedCountries",
+      "description": "Returns list of all 182 supported countries with ISO code, name, prayer method, and prayer Madhab."
+    },
+    {
+      "name": "supportedCountriesCount",
+      "signature": "int get supportedCountriesCount",
+      "description": "Returns integer count of supported countries (182)."
+    },
+    {
+      "name": "getCountry",
+      "signature": "Country getCountry(String isoCode)",
+      "description": "Returns Country metadata for given ISO 3166-1 alpha-2 code (e.g. 'DZ' for Algeria)."
+    },
+    {
+      "name": "calculationMethods",
+      "signature": "List<PrayerCalculationMethodDetails> get calculationMethods",
+      "description": "Returns list of all 23 prayer calculation methods including depression angles and offsets."
+    },
+    {
+      "name": "calculationMethodsCount",
+      "signature": "int get calculationMethodsCount",
+      "description": "Returns integer count of calculation methods (23)."
+    },
+    {
+      "name": "aboutCalculationMethod",
+      "signature": "PrayerCalculationMethodDetails aboutCalculationMethod(PrayerCalculationMethod method)",
+      "description": "Returns detailed metadata for a specific calculation method."
+    }
+  ]
+}

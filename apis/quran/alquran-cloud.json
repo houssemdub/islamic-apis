@@ -1,0 +1,154 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "AlQuran Cloud API",
+  "version": "1.0.0",
+  "category": "Quran Text, Audio & Search APIs",
+  "description": "Comprehensive RESTful Quran API and CDN providing all 114 surahs, individual ayahs, juzs, pages, hizbs, manzils, and rukus across 80+ translations, multiple Arabic scripts, and verse-by-verse audio recitations. Completely free and keyless.",
+  "website": "https://alquran.cloud",
+  "documentation": "https://alquran.cloud/api",
+  "baseUrl": "https://api.alquran.cloud/v1",
+  "authentication": {
+    "type": "none",
+    "required": false,
+    "description": "Public, open API. No authentication or API keys required."
+  },
+  "rateLimit": {
+    "policy": "Open access. Caching is strongly recommended for static text and audio files."
+  },
+  "format": "JSON",
+  "responseEnvelope": {
+    "code": "integer (HTTP status, 200)",
+    "status": "string ('OK')",
+    "data": "object | array"
+  },
+  "endpoints": [
+    {
+      "name": "List All Surahs",
+      "path": "/surah",
+      "method": "GET",
+      "description": "Returns metadata for all 114 Surahs (number, Arabic name, English name, translation, revelation type, number of ayahs)."
+    },
+    {
+      "name": "Get Surah by Number",
+      "path": "/surah/{number}",
+      "method": "GET",
+      "description": "Returns a complete Surah in standard Arabic Uthmani text.",
+      "parameters": [
+        { "name": "number", "in": "path", "type": "integer", "required": true, "example": 1, "description": "Surah index (1-114)" }
+      ]
+    },
+    {
+      "name": "Get Surah by Edition(s)",
+      "path": "/surah/{number}/{edition}",
+      "method": "GET",
+      "description": "Returns a Surah in a specific text, translation, or audio edition. Supports multiple comma-separated editions (e.g. 'quran-uthmani,en.asad,ar.alafasy').",
+      "parameters": [
+        { "name": "number", "in": "path", "type": "integer", "required": true, "example": 1 },
+        { "name": "edition", "in": "path", "type": "string", "required": true, "example": "en.asad" }
+      ]
+    },
+    {
+      "name": "Get Ayah by Reference",
+      "path": "/ayah/{reference}",
+      "method": "GET",
+      "description": "Fetches a single Ayah by absolute global index (1-6236) or surah:ayah key (e.g. 2:255).",
+      "parameters": [
+        { "name": "reference", "in": "path", "type": "string", "required": true, "example": "2:255" }
+      ]
+    },
+    {
+      "name": "Get Ayah by Edition",
+      "path": "/ayah/{reference}/{edition}",
+      "method": "GET",
+      "description": "Fetches a single Ayah for a specific translation or recitation edition.",
+      "parameters": [
+        { "name": "reference", "in": "path", "type": "string", "required": true, "example": "2:255" },
+        { "name": "edition", "in": "path", "type": "string", "required": true, "example": "en.pickthall" }
+      ]
+    },
+    {
+      "name": "Get Ayah Across Multiple Editions",
+      "path": "/ayah/{reference}/editions/{editions}",
+      "method": "GET",
+      "description": "Returns an ayah across multiple comma-separated editions.",
+      "parameters": [
+        { "name": "reference", "in": "path", "type": "string", "required": true, "example": "1:1" },
+        { "name": "editions", "in": "path", "type": "string", "required": true, "example": "quran-uthmani,en.sahih,ur.jalandhry" }
+      ]
+    },
+    {
+      "name": "Get Random Ayah",
+      "path": "/ayah/random",
+      "method": "GET",
+      "description": "Fetches a random verse from the Quran."
+    },
+    {
+      "name": "Get Juz",
+      "path": "/juz/{number}/{edition}",
+      "method": "GET",
+      "description": "Retrieves an entire Juz (1 to 30) for a specific edition.",
+      "parameters": [
+        { "name": "number", "in": "path", "type": "integer", "required": true, "example": 30 },
+        { "name": "edition", "in": "path", "type": "string", "required": false, "default": "quran-uthmani", "example": "en.sahih" }
+      ]
+    },
+    {
+      "name": "Get Mushaf Page",
+      "path": "/page/{number}/{edition}",
+      "method": "GET",
+      "description": "Retrieves verses on a specific Medina Mushaf page (1 to 604).",
+      "parameters": [
+        { "name": "number", "in": "path", "type": "integer", "required": true, "example": 1 },
+        { "name": "edition", "in": "path", "type": "string", "required": false, "default": "quran-uthmani" }
+      ]
+    },
+    {
+      "name": "Get Hizb Quarter",
+      "path": "/hizbQuarter/{number}/{edition}",
+      "method": "GET",
+      "description": "Retrieves a Hizb Quarter (1 to 240).",
+      "parameters": [
+        { "name": "number", "in": "path", "type": "integer", "required": true, "example": 1 },
+        { "name": "edition", "in": "path", "type": "string", "required": false, "default": "quran-uthmani" }
+      ]
+    },
+    {
+      "name": "Get Manzil",
+      "path": "/manzil/{number}/{edition}",
+      "method": "GET",
+      "description": "Retrieves a Manzil (1 to 7).",
+      "parameters": [
+        { "name": "number", "in": "path", "type": "integer", "required": true, "example": 7 },
+        { "name": "edition", "in": "path", "type": "string", "required": false, "default": "quran-uthmani" }
+      ]
+    },
+    {
+      "name": "List All Editions",
+      "path": "/edition",
+      "method": "GET",
+      "description": "Lists all available translations, Arabic scripts, transliterations, and audio recitations with format, language, and type filters.",
+      "parameters": [
+        { "name": "format", "in": "query", "type": "string", "required": false, "enum": ["text", "audio"] },
+        { "name": "language", "in": "query", "type": "string", "required": false, "example": "en" },
+        { "name": "type", "in": "query", "type": "string", "required": false, "enum": ["translation", "quran", "transliteration", "versebyverse"] }
+      ]
+    },
+    {
+      "name": "Search Quran",
+      "path": "/search/{keyword}/{surah}/{edition}",
+      "method": "GET",
+      "description": "Searches for a word or phrase within a specific Surah (or 'all' for the whole Quran) using a chosen edition.",
+      "parameters": [
+        { "name": "keyword", "in": "path", "type": "string", "required": true, "example": "mercy" },
+        { "name": "surah", "in": "path", "type": "string", "required": true, "example": "all" },
+        { "name": "edition", "in": "path", "type": "string", "required": true, "example": "en.sahih" }
+      ]
+    },
+    {
+      "name": "Get Quran Metadata",
+      "path": "/meta",
+      "method": "GET",
+      "description": "Returns structural metadata for all Surahs, Pages, Hizbs, Quarters, and Juzs."
+    }
+  ]
+}

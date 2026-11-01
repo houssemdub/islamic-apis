@@ -1,0 +1,150 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Quran.com API",
+  "version": "4.0.0",
+  "category": "Quran Text, Audio & Search APIs",
+  "description": "The official v4 REST API powering Quran.com. Provides deep programmatic access to chapter metadata, verse-by-verse data, word-by-word linguistics, audio recitations, Tafsirs (commentaries), search, and audio timestamps/segments.",
+  "website": "https://quran.com",
+  "documentation": "https://api-docs.quran.foundation",
+  "baseUrl": "https://api.quran.com/api/v4",
+  "cdnBaseUrl": "https://api.qurancdn.com/api/v4",
+  "authentication": {
+    "type": "none",
+    "required": false,
+    "description": "Publicly accessible API. No API key required."
+  },
+  "rateLimit": {
+    "policy": "Open access with standard rate limiting. Developers are encouraged to use client caching and CDN endpoints."
+  },
+  "format": "JSON",
+  "officialSDK": "@quranjs/api",
+  "endpoints": [
+    {
+      "name": "List Chapters (Surahs)",
+      "path": "/chapters",
+      "method": "GET",
+      "description": "Lists all 114 chapters with names, transliterations, revelation place, order, verses count, and page ranges.",
+      "parameters": [
+        { "name": "language", "in": "query", "type": "string", "required": false, "default": "en", "description": "Language for translated names" }
+      ]
+    },
+    {
+      "name": "Get Single Chapter Info",
+      "path": "/chapters/{id}",
+      "method": "GET",
+      "description": "Fetches metadata for a single chapter.",
+      "parameters": [
+        { "name": "id", "in": "path", "type": "integer", "required": true, "example": 1 }
+      ]
+    },
+    {
+      "name": "Get Chapter Historical & Contextual Info",
+      "path": "/chapters/{id}/info",
+      "method": "GET",
+      "description": "Fetches historical background, revelation circumstances, and themes of a chapter.",
+      "parameters": [
+        { "name": "id", "in": "path", "type": "integer", "required": true, "example": 1 },
+        { "name": "language", "in": "query", "type": "string", "required": false, "default": "en" }
+      ]
+    },
+    {
+      "name": "Get Verses by Chapter",
+      "path": "/verses/by_chapter/{chapter_number}",
+      "method": "GET",
+      "description": "Fetches verses of a chapter with word-by-word breakdowns, translations, tafsirs, and audio timestamps.",
+      "parameters": [
+        { "name": "chapter_number", "in": "path", "type": "integer", "required": true, "example": 1 },
+        { "name": "language", "in": "query", "type": "string", "required": false, "default": "en" },
+        { "name": "words", "in": "query", "type": "boolean", "required": false, "default": true, "description": "Include word-by-word analysis" },
+        { "name": "translations", "in": "query", "type": "string", "required": false, "example": "131,20", "description": "Comma-separated translation resource IDs" },
+        { "name": "tafsirs", "in": "query", "type": "string", "required": false, "example": "169", "description": "Comma-separated tafsir resource IDs" },
+        { "name": "fields", "in": "query", "type": "string", "required": false, "example": "text_uthmani,chapter_id,verse_key" },
+        { "name": "page", "in": "query", "type": "integer", "required": false, "default": 1 },
+        { "name": "per_page", "in": "query", "type": "integer", "required": false, "default": 10 }
+      ]
+    },
+    {
+      "name": "Get Verses by Page",
+      "path": "/verses/by_page/{page_number}",
+      "method": "GET",
+      "description": "Fetches all verses on a specific Mushaf page (1 to 604).",
+      "parameters": [
+        { "name": "page_number", "in": "path", "type": "integer", "required": true, "example": 1 }
+      ]
+    },
+    {
+      "name": "Get Verses by Juz",
+      "path": "/verses/by_juz/{juz_number}",
+      "method": "GET",
+      "description": "Fetches all verses in a specific Juz (1 to 30).",
+      "parameters": [
+        { "name": "juz_number", "in": "path", "type": "integer", "required": true, "example": 30 }
+      ]
+    },
+    {
+      "name": "Get Verse by Key",
+      "path": "/verses/by_key/{verse_key}",
+      "method": "GET",
+      "description": "Fetches a single verse by its key (e.g. 2:255).",
+      "parameters": [
+        { "name": "verse_key", "in": "path", "type": "string", "required": true, "example": "2:255" }
+      ]
+    },
+    {
+      "name": "Get Random Verse",
+      "path": "/verses/random",
+      "method": "GET",
+      "description": "Returns a random verse."
+    },
+    {
+      "name": "List Translations Resources",
+      "path": "/resources/translations",
+      "method": "GET",
+      "description": "Lists all available translations with resource IDs, author names, language codes, and license info."
+    },
+    {
+      "name": "List Tafsir Resources",
+      "path": "/resources/tafsirs",
+      "method": "GET",
+      "description": "Lists all commentary resources (Ibn Kathir, Al-Jalalayn, Ma'arif, etc.)."
+    },
+    {
+      "name": "List Recitation Resources",
+      "path": "/resources/recitations",
+      "method": "GET",
+      "description": "Lists audio reciters with recitation IDs, styles (murattal, mujawwad), and audio file URLs."
+    },
+    {
+      "name": "Get Tafsir by Ayah",
+      "path": "/tafsirs/{tafsir_id}/by_ayah/{verse_key}",
+      "method": "GET",
+      "description": "Fetches detailed scholarly commentary for a specific verse.",
+      "parameters": [
+        { "name": "tafsir_id", "in": "path", "type": "string", "required": true, "example": "en-tafisr-ibn-kathir" },
+        { "name": "verse_key", "in": "path", "type": "string", "required": true, "example": "1:1" }
+      ]
+    },
+    {
+      "name": "Get Chapter Recitation Audio",
+      "path": "/chapter_recitations/{reciter_id}/{chapter_number}",
+      "method": "GET",
+      "description": "Returns the complete chapter audio stream URL and duration for a given reciter.",
+      "parameters": [
+        { "name": "reciter_id", "in": "path", "type": "integer", "required": true, "example": 7 },
+        { "name": "chapter_number", "in": "path", "type": "integer", "required": true, "example": 1 }
+      ]
+    },
+    {
+      "name": "Search Quran",
+      "path": "/search",
+      "method": "GET",
+      "description": "Searches Quranic Arabic text and translations with highlighting.",
+      "parameters": [
+        { "name": "q", "in": "query", "type": "string", "required": true, "example": "mercy" },
+        { "name": "size", "in": "query", "type": "integer", "required": false, "default": 20 },
+        { "name": "page", "in": "query", "type": "integer", "required": false, "default": 1 },
+        { "name": "language", "in": "query", "type": "string", "required": false, "default": "en" }
+      ]
+    }
+  ]
+}

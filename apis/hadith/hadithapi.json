@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "HadithAPI.com",
+  "version": "1.0.0",
+  "category": "Hadith & Prophetic Traditions",
+  "description": "Enterprise-ready authenticated RESTful Hadith service indexing canonical books (Sahih Bukhari, Sahih Muslim, Sunan Abi Dawud, Jami at-Tirmidhi, Sunan an-Nasa'i, Sunan Ibn Majah, and Mishkat al-Masabih). Supports full-text search across Arabic, English, and Urdu, authenticity grading filters, chapter navigation, and paginated queries.",
+  "website": "https://hadithapi.com",
+  "documentation": "https://hadithapi.com",
+  "baseUrl": "https://hadithapi.com/api",
+  "authentication": {
+    "type": "apiKey",
+    "required": true,
+    "paramName": "apiKey",
+    "in": "query",
+    "description": "Free API key obtained instantly from user profile at hadithapi.com."
+  },
+  "rateLimit": {
+    "policy": "Tiered rate limits per developer API key."
+  },
+  "format": "JSON",
+  "endpoints": [
+    {
+      "name": "Get All Hadith Books",
+      "path": "/books",
+      "method": "GET",
+      "description": "Retrieves list of available Hadith books with their unique slugs, total hadiths, chapters count, and metadata."
+    },
+    {
+      "name": "Get Chapters of a Book",
+      "path": "/{bookSlug}/chapters",
+      "method": "GET",
+      "description": "Retrieves chapter list and breakdown for a specified Hadith book.",
+      "parameters": [
+        { "name": "bookSlug", "in": "path", "type": "string", "required": true, "example": "sahih-bukhari", "description": "Book identifier slug" }
+      ]
+    },
+    {
+      "name": "Query / Search Hadiths",
+      "path": "/hadiths",
+      "method": "GET",
+      "description": "Queries hadiths with rich filters for book, chapter, hadith number, status grade, and multilingual search terms.",
+      "parameters": [
+        { "name": "book", "in": "query", "type": "string", "required": false, "example": "sahih-bukhari", "description": "Book slug filter" },
+        { "name": "chapter", "in": "query", "type": "integer", "required": false, "example": 1, "description": "Chapter number" },
+        { "name": "hadithNumber", "in": "query", "type": "string", "required": false, "example": "1", "description": "Hadith sequence number" },
+        { "name": "status", "in": "query", "type": "string", "required": false, "example": "Sahih", "description": "Authenticity grade (Sahih, Hasan, Da`eef)" },
+        { "name": "hadithEnglish", "in": "query", "type": "string", "required": false, "example": "intentions", "description": "Search keyword in English" },
+        { "name": "hadithUrdu", "in": "query", "type": "string", "required": false, "description": "Search keyword in Urdu" },
+        { "name": "hadithArabic", "in": "query", "type": "string", "required": false, "description": "Search keyword in Arabic" },
+        { "name": "paginate", "in": "query", "type": "integer", "required": false, "example": 25, "description": "Page size" }
+      ]
+    }
+  ]
+}

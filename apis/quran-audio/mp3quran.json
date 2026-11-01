@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "MP3Quran API (v3)",
+  "version": "3.0.0",
+  "category": "Quran Audio & Recitation Streams",
+  "description": "The world's leading high-bandwidth Islamic audio CDN and REST API. Provides full MP3 audio recitations for over 250+ world-renowned Qurra (reciters), multiple Riwayat (Hafs, Warsh, Qalun, Al-Duri), 114 Surahs, live 24/7 Quran radio stations, Tafsir audio lectures, and Holy Sanctuary live video feeds (Makkah & Madinah).",
+  "website": "https://mp3quran.net",
+  "documentation": "https://mp3quran.net/api/v3",
+  "baseUrl": "https://mp3quran.net/api/v3",
+  "authentication": {
+    "type": "none",
+    "required": false,
+    "description": "Public, keyless high-capacity CDN API."
+  },
+  "rateLimit": {
+    "policy": "Open access. High performance CDN edge caching."
+  },
+  "format": "JSON",
+  "endpoints": [
+    {
+      "name": "List All Reciters",
+      "path": "/reciters",
+      "method": "GET",
+      "description": "Lists reciters with localized names, available Moshafs (Riwayat), audio server base URLs, and list of available surah audio numbers.",
+      "parameters": [
+        { "name": "language", "in": "query", "type": "string", "required": false, "example": "ar", "description": "Language code (ar, eng, fr, ru, etc.)" },
+        { "name": "reciter", "in": "query", "type": "integer", "required": false, "example": 54, "description": "Filter by reciter ID" },
+        { "name": "rewaya", "in": "query", "type": "integer", "required": false, "example": 1, "description": "Filter by Riwaya/narration ID" }
+      ]
+    },
+    {
+      "name": "List All Suwar (Surahs)",
+      "path": "/suwar",
+      "method": "GET",
+      "description": "Returns list of 114 Surahs with revelation place (Makki/Madani), starting page, and localized name.",
+      "parameters": [
+        { "name": "language", "in": "query", "type": "string", "required": false, "example": "ar", "description": "Language code (ar, eng, etc.)" }
+      ]
+    },
+    {
+      "name": "List Riwayat (Moshafs)",
+      "path": "/riwayat",
+      "method": "GET",
+      "description": "Lists all Quranic narrations / recitation styles (e.g., Hafs 'an Asim, Warsh 'an Nafi', Qalun).",
+      "parameters": [
+        { "name": "language", "in": "query", "type": "string", "required": false, "example": "ar" }
+      ]
+    },
+    {
+      "name": "Live Quran Radio Stations",
+      "path": "/radios",
+      "method": "GET",
+      "description": "Returns 150+ live streaming 24/7 internet radio URLs for specific reciters, translations, and Islamic topics.",
+      "parameters": [
+        { "name": "language", "in": "query", "type": "string", "required": false, "example": "ar" }
+      ]
+    },
+    {
+      "name": "Audio Tafasir (Commentaries)",
+      "path": "/tafasir",
+      "method": "GET",
+      "description": "Returns audio tafsir lessons and explanations indexed by Surah.",
+      "parameters": [
+        { "name": "language", "in": "query", "type": "string", "required": false, "example": "ar" }
+      ]
+    },
+    {
+      "name": "Live Holy Sanctuaries TV",
+      "path": "/live-tv",
+      "method": "GET",
+      "description": "Returns official 24/7 live video stream URLs for Makkah (Masjid al-Haram) and Madinah (Al-Masjid an-Nabawi)."
+    },
+    {
+      "name": "Available Languages",
+      "path": "/languages",
+      "method": "GET",
+      "description": "Returns list of all supported languages across the API with localization links."
+    }
+  ],
+  "audioUrlFormat": {
+    "description": "Reciter audio files are constructed using reciter.moshaf[i].server + 3-digit padded surah number + .mp3",
+    "example": "https://server8.mp3quran.net/afs/001.mp3"
+  }
+}

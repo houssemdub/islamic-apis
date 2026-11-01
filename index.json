@@ -1,0 +1,192 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Islamic APIs Registry & Developer Hub",
+  "version": "2.0.0",
+  "description": "Comprehensive, standardized directory of curated Islamic APIs spanning prayer times, Hijri calendars, Quran text & audio, Hadith collections, Tafsir commentaries, Duas & Adhkar, and AI vector search.",
+  "categories": [
+    {
+      "id": "all-in-one",
+      "title": "All-in-One & Multi-Service Platforms",
+      "description": "Comprehensive platforms providing prayer times, Quran, Hadith, Duas, and calendar conversions within a single integration ecosystem.",
+      "apis": [
+        {
+          "id": "ummahapi",
+          "name": "UmmahAPI",
+          "jsonSpec": "apis/all-in-one/ummahapi.json",
+          "documentation": "docs/apis/ummahapi-doc.md",
+          "baseUrl": "https://ummahapi.com",
+          "auth": "None / Optional Free Key",
+          "features": ["Prayer Times (23 methods)", "Quran & Audio", "Hadith", "Qibla", "Duas", "Asma ul-Husna", "Tafsir", "Zakat", "MCP Server"]
+        },
+        {
+          "id": "islamic-network",
+          "name": "Islamic Network",
+          "jsonSpec": "apis/all-in-one/islamic-network.json",
+          "documentation": "docs/apis/islamic-network-doc.md",
+          "baseUrl": "https://islamic.network",
+          "auth": "Free / Keyless",
+          "features": ["AlAdhan API", "AlQuran Cloud API", "Audio CDN", "Sermons (Khutbahs) API", "Open Source TypeScript SDKs"]
+        }
+      ]
+    },
+    {
+      "id": "prayer-times",
+      "title": "Prayer Times, Qibla & Calendar APIs",
+      "description": "Astronomical calculation engines, geocoded municipality schedules, and Hijri/Gregorian calendar synchronization.",
+      "apis": [
+        {
+          "id": "aladhan",
+          "name": "AlAdhan Prayer Times API",
+          "jsonSpec": "apis/prayer-times/aladhan.json",
+          "documentation": "docs/apis/aladhan-doc.md",
+          "baseUrl": "https://api.aladhan.com/v1",
+          "auth": "Free / Keyless",
+          "features": ["Coordinates, City & Address Lookup", "20+ Calculation Methods", "Monthly & Annual Calendars", "Qibla Angle", "Date Conversions", "99 Names"]
+        },
+        {
+          "id": "islamcave",
+          "name": "IslamCave Prayer Times API",
+          "jsonSpec": "apis/prayer-times/islamcave.json",
+          "documentation": "docs/apis/islamcave-doc.md",
+          "baseUrl": "https://islamcave.com/api",
+          "auth": "None (Requires attribution param)",
+          "features": ["Single Clean GET Endpoint", "5 Prayers + Sunrise", "Pre-formatted 12-hour strings", "Qibla Compass Bearing", "Global Coordinates"]
+        },
+        {
+          "id": "kalimat-prayer-times",
+          "name": "Kalimat Prayer Times API",
+          "jsonSpec": "apis/prayer-times/kalimat-prayer-times.json",
+          "documentation": "docs/apis/kalimat-prayer-times-doc.md",
+          "baseUrl": "https://api.kalimat.dev/api/v2",
+          "auth": "API Key Required",
+          "features": ["Enterprise Nearest-City Geocoding", "Verified Municipality Times", "Date Ranges", "Local Timezone Resolution", "High SLA"]
+        },
+        {
+          "id": "prayer-zone",
+          "name": "PrayerZone Flutter & Dart Library",
+          "jsonSpec": "apis/prayer-times/prayer-zone.json",
+          "documentation": "docs/apis/prayer-zone-doc.md",
+          "baseUrl": "https://pub.dev/packages/prayer_zone",
+          "auth": "Open Source (Client Library)",
+          "features": ["23 Astronomical Methods", "Algerian Ministry Calculation (18°/17°)", "182 Countries Geocoded", "Shafi & Hanafi Madhabs", "Offline Engine"]
+        }
+      ]
+    },
+    {
+      "id": "quran",
+      "title": "Quran Text, Linguistic & AI Search APIs",
+      "description": "Digital Mushaf text, word-by-word analysis, translations across 90+ languages, and AI semantic vector search.",
+      "apis": [
+        {
+          "id": "alquran-cloud",
+          "name": "AlQuran Cloud API",
+          "jsonSpec": "apis/quran/alquran-cloud.json",
+          "documentation": "docs/apis/alquran-cloud-doc.md",
+          "baseUrl": "https://api.alquran.cloud/v1",
+          "auth": "Free / Keyless",
+          "features": ["114 Surahs", "80+ Translations", "Verse-by-Verse Recitations", "Juz / Page / Hizb / Manzil Divisions", "Multi-edition Comma Queries"]
+        },
+        {
+          "id": "quran-com",
+          "name": "Quran.com API (v4)",
+          "jsonSpec": "apis/quran/quran-com.json",
+          "documentation": "docs/apis/quran-com-doc.md",
+          "baseUrl": "https://api.quran.com/api/v4",
+          "auth": "Free / Public",
+          "features": ["Word-by-word Linguistics", "Audio Segments & Timestamps", "Multiple Tafsirs", "Tajweed Metadata", "Search", "Official TypeScript SDK"]
+        },
+        {
+          "id": "fawaz-quran",
+          "name": "Fawaz Ahmed Quran API",
+          "jsonSpec": "apis/quran/fawaz-quran.json",
+          "documentation": "docs/apis/fawaz-quran-doc.md",
+          "baseUrl": "https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1",
+          "auth": "Free / Keyless CDN",
+          "features": ["440+ Editions", "90+ Languages", "Fast jsDelivr CDN", "Juz & Ayah Lookups", "Zero Latency Edge"]
+        },
+        {
+          "id": "kalimat-search",
+          "name": "Kalimat Search API",
+          "jsonSpec": "apis/quran/kalimat-search.json",
+          "documentation": "docs/apis/kalimat-search-doc.md",
+          "baseUrl": "https://api.kalimat.dev/api/v2",
+          "auth": "API Key Required",
+          "features": ["Semantic Vector Quran Search", "Natural Language Queries", "English & Arabic Meaning Matching", "Root-Word Analysis"]
+        }
+      ]
+    },
+    {
+      "id": "quran-audio",
+      "title": "Quran Audio Recitations & Media Streams",
+      "description": "High-bandwidth CDNs providing full surah recitations, multi-Qari libraries, and 24/7 Quran internet radio streams.",
+      "apis": [
+        {
+          "id": "mp3quran",
+          "name": "MP3Quran API (v3)",
+          "jsonSpec": "apis/quran-audio/mp3quran.json",
+          "documentation": "docs/apis/mp3quran-doc.md",
+          "baseUrl": "https://mp3quran.net/api/v3",
+          "auth": "Free / Keyless CDN",
+          "features": ["250+ Reciters", "Multiple Riwayat (Hafs, Warsh, etc.)", "150+ 24/7 Live Radio Streams", "Makkah & Madinah Live TV", "Tafsir Audio Lessons"]
+        }
+      ]
+    },
+    {
+      "id": "hadith",
+      "title": "Hadith & Prophetic Traditions APIs",
+      "description": "Canonical Hadith collections (Kutub al-Sittah), scholarly authenticity gradings, and multilingual translations.",
+      "apis": [
+        {
+          "id": "fawaz-hadith",
+          "name": "Fawaz Ahmed Hadith API",
+          "jsonSpec": "apis/hadith/fawaz-hadith.json",
+          "documentation": "docs/apis/fawaz-hadith-doc.md",
+          "baseUrl": "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1",
+          "auth": "Free / Keyless CDN",
+          "features": ["Kutub al-Sittah + Malik + Ahmad", "Arabic & Multilingual Translations", "Authenticity Gradings", "Fast CDN Access", "Chapter Sections"]
+        },
+        {
+          "id": "hadithapi",
+          "name": "HadithAPI.com",
+          "jsonSpec": "apis/hadith/hadithapi.json",
+          "documentation": "docs/apis/hadithapi-doc.md",
+          "baseUrl": "https://hadithapi.com/api",
+          "auth": "API Key Required",
+          "features": ["7 Primary Hadith Books", "Arabic/English/Urdu Search", "Authenticity Status Filters", "Paginated API", "Chapter Breakdowns"]
+        }
+      ]
+    },
+    {
+      "id": "tafsir",
+      "title": "Tafsir & Exegesis APIs",
+      "description": "Scholarly Quranic interpretations and commentaries across classical and modern scholars.",
+      "apis": [
+        {
+          "id": "quran-tafseer",
+          "name": "Quran Tafseer API",
+          "jsonSpec": "apis/tafsir/quran-tafseer.json",
+          "documentation": "docs/apis/quran-tafseer-doc.md",
+          "baseUrl": "http://api.quran-tafseer.com",
+          "auth": "Free / Keyless",
+          "features": ["Al-Muyassar, Ibn Kathir, Al-Sa'di, Al-Jalalayn, Al-Qurtubi", "Single Verse & Verse Range Endpoints", "Multiple Languages"]
+        }
+      ]
+    },
+    {
+      "id": "duas-adhkar",
+      "title": "Duas & Adhkar (Daily Remembrances)",
+      "description": "Authentic supplications, morning & evening remembrances, and Fortress of the Muslim (Hisn al-Muslim).",
+      "apis": [
+        {
+          "id": "hisn-almuslim",
+          "name": "Hisn al-Muslim & Azkar API",
+          "jsonSpec": "apis/duas-adhkar/hisn-almuslim.json",
+          "documentation": "docs/apis/hisn-almuslim-doc.md",
+          "baseUrl": "https://raw.githubusercontent.com/rn0x/hisn_almuslim_json/main",
+          "auth": "Free / Keyless Open Dataset",
+          "features": ["132+ Adhkar Categories", "Vocalized Arabic Text", "Repetition Counters", "Audio Citations", "English Translations"]
+        }
+      ]
+    }
+  ]
+}

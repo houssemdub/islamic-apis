@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Kalimat Search API",
+  "version": "2.0.0",
+  "category": "Quran Text, Audio & Search APIs",
+  "description": "Enterprise AI-powered semantic search engine spanning the Holy Quran (114 chapters), Sahih Sittah canonical Hadith collections, and authentic Athkar/supplications across 130+ translations. Understands conceptual and natural language questions, cross-lingual querying, and offers granular filtering by Hadith grading and source books.",
+  "website": "https://kalimat.dev",
+  "documentation": "https://kalimat.dev",
+  "baseUrl": "https://api.kalimat.dev/api/v2",
+  "authentication": {
+    "type": "apiKey",
+    "headerName": "X-Api-Key",
+    "required": true,
+    "description": "Requires an API key passed in the X-Api-Key HTTP header. Keys can be requested via info@kalimat.dev."
+  },
+  "rateLimit": {
+    "policy": "Tiered by enterprise subscription with dedicated latency guarantees."
+  },
+  "format": "JSON",
+  "supportedContentRepositories": [
+    { "type": "quran", "description": "All 114 Surahs and 6,236 Ayahs with translation embeddings" },
+    { "type": "sunnah", "description": "Kutub al-Sittah (Bukhari, Muslim, Abu Dawood, Tirmidhi, Nasa'i, Ibn Majah)" },
+    { "type": "azkar", "description": "Authentic daily supplications and remembrances from Hisn al-Muslim and Sunnah" }
+  ],
+  "endpoints": [
+    {
+      "name": "Semantic AI Search",
+      "path": "/search",
+      "method": "GET",
+      "description": "Executes semantic, natural language, or reference search queries across Quran, Hadith, or Azkar.",
+      "headers": [
+        { "name": "X-Api-Key", "type": "string", "required": true, "description": "Kalimat API Key" }
+      ],
+      "parameters": [
+        { "name": "query", "in": "query", "type": "string", "required": true, "example": "patience in difficult times", "description": "Search prompt or conceptual query" },
+        { "name": "contentType", "in": "query", "type": "string", "required": false, "default": "quran", "enum": ["quran", "sunnah", "azkar"], "description": "Repository to search" },
+        { "name": "getText", "in": "query", "type": "boolean", "required": false, "default": false, "description": "Include full Arabic text and translations in response" },
+        { "name": "getMetadata", "in": "query", "type": "boolean", "required": false, "default": false, "description": "Include Hadith metadata (matn, isnad, grade, chapter)" },
+        { "name": "userLang", "in": "query", "type": "string", "required": false, "example": "en", "description": "Language code for translations (e.g. en, fr, ur)" },
+        { "name": "numResults", "in": "query", "type": "integer", "required": false, "default": 20, "description": "Number of results (1 to 50)" },
+        { "name": "start", "in": "query", "type": "integer", "required": false, "default": 0, "description": "Pagination offset" },
+        { "name": "hadithSourceBook", "in": "query", "type": "string", "required": false, "example": "bukhari,muslim", "description": "Comma-separated Hadith collections (bukhari, muslim, abudaud, tirmizi, nesai, ibnmaja)" },
+        { "name": "hadithGrade", "in": "query", "type": "string", "required": false, "example": "sahih", "description": "Filter by grading (sahih, hasan, daif, munkar, maudu, other)" },
+        { "name": "hadithChapter", "in": "query", "type": "integer", "required": false, "description": "Filter by chapter number when a single hadithSourceBook is specified" }
+      ],
+      "sampleResponse": {
+        "data": {
+          "totalResults": 38,
+          "results": [
+            {
+              "id": "2:155",
+              "type": "quran",
+              "score": 0.942,
+              "text": "وَلَنَبْلُوَنَّكُم بِشَيْءٍ مِّنَ الْخَوْفِ وَالْجُوعِ...",
+              "translation": "And We will surely test you with something of fear and hunger and a loss of wealth and lives and fruits, but give good tidings to the patient.",
+              "surahNumber": 2,
+              "ayahNumber": 155
+            }
+          ]
+        },
+        "meta": { "version": "2.0" }
+      }
+    },
+    {
+      "name": "Quick Search / Autocomplete",
+      "path": "/quick-search",
+      "method": "GET",
+      "description": "Fast autocomplete endpoint optimized for search input boxes, suggesting navigational references or direct Surah/Hadith matches.",
+      "headers": [
+        { "name": "X-Api-Key", "type": "string", "required": true }
+      ],
+      "parameters": [
+        { "name": "query", "in": "query", "type": "string", "required": true, "example": "kursi" },
+        { "name": "getText", "in": "query", "type": "boolean", "required": false, "default": true },
+        { "name": "contentType", "in": "query", "type": "string", "required": false, "default": "quran" }
+      ]
+    },
+    {
+      "name": "Search Engine Version",
+      "path": "/search/version",
+      "method": "GET",
+      "description": "Returns current model version and semantic index build details."
+    }
+  ]
+}

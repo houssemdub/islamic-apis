@@ -1,0 +1,265 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "UmmahAPI",
+  "version": "1.0.0",
+  "category": "All-in-One & Multi-Service APIs",
+  "description": "Comprehensive all-in-one Islamic REST API providing prayer times with 23 calculation methods, complete Quran text and audio (12 translations, 12 reciters), Hadith collections, Qibla compass bearing, Hijri calendar, Duas, 99 Names of Allah, Tafsir, Zakat calculator, and Model Context Protocol (MCP) support. Free with no signup required for anonymous requests.",
+  "website": "https://ummahapi.com",
+  "documentation": "https://ummahapi.com",
+  "baseUrl": "https://ummahapi.com",
+  "authentication": {
+    "type": "none_or_api_key",
+    "required": false,
+    "description": "Anonymous requests require no key or signup. Free API keys can be requested for higher rate limits and passed via header or query parameter.",
+    "headerName": "X-API-Key",
+    "queryParam": "apikey"
+  },
+  "rateLimit": {
+    "anonymous": "100 requests / minute",
+    "authenticated": "Higher limits available with free API key"
+  },
+  "format": "JSON",
+  "responseEnvelope": {
+    "success": "boolean (true/false)",
+    "service": "string (name of requested service)",
+    "data": "object | array (actual payload)",
+    "timestamp": "ISO-8601 string",
+    "api_info": "object (metadata & sadaqah jariah notice)"
+  },
+  "features": [
+    "Prayer times with 23 astronomical calculation methods & high latitude rules",
+    "Quran text, translations, word-by-word analysis, transliteration, and audio recitations",
+    "Hadith collections (tens of thousands of hadiths including Sahih al-Bukhari)",
+    "Qibla direction compass bearing calculation",
+    "Hijri calendar conversions and moon sighting calculations",
+    "Authentic Duas categorized into 27 life occasions",
+    "99 Names of Allah (Asma ul-Husna) with meanings and transliteration",
+    "Tafsir commentaries (Ibn Kathir, Ma'arif al-Qur'an, Muyassar)",
+    "Dynamic Zakat calculator based on current gold/silver Nisab",
+    "Model Context Protocol (MCP) endpoint for AI agents"
+  ],
+  "endpoints": [
+    {
+      "name": "Get Today Prayer Times",
+      "path": "/api/prayer-times",
+      "method": "GET",
+      "description": "Returns prayer times (Fajr, Sunrise, Dhuhr, Asr, Maghrib, Isha) for the specified coordinates.",
+      "parameters": [
+        { "name": "lat", "in": "query", "type": "number", "required": true, "example": 40.7128, "description": "Latitude coordinate" },
+        { "name": "lng", "in": "query", "type": "number", "required": true, "example": -74.006, "description": "Longitude coordinate" },
+        { "name": "method", "in": "query", "type": "string", "required": false, "default": "MuslimWorldLeague", "example": "Algeria", "description": "Calculation method (e.g. MuslimWorldLeague, NorthAmerica, Egyptian, UmmAlQura, Algeria)" },
+        { "name": "madhab", "in": "query", "type": "string", "required": false, "default": "Shafi", "enum": ["Shafi", "Hanafi"], "description": "Juristic method for Asr prayer" },
+        { "name": "highLatitudeRule", "in": "query", "type": "string", "required": false, "enum": ["MiddleOfTheNight", "SeventhOfTheNight", "TwilightAngle"], "description": "Adjustment rule for high latitudes" }
+      ],
+      "sampleResponse": {
+        "success": true,
+        "service": "prayer-times",
+        "data": {
+          "coordinates": { "lat": 40.7128, "lng": -74.006 },
+          "date": "2026-10-12",
+          "method": "NorthAmerica",
+          "madhab": "Shafi",
+          "times": {
+            "fajr": "05:45",
+            "sunrise": "07:05",
+            "dhuhr": "12:47",
+            "asr": "15:58",
+            "maghrib": "18:22",
+            "isha": "19:42"
+          }
+        },
+        "timestamp": "2026-10-12T20:00:00.000Z"
+      }
+    },
+    {
+      "name": "Get Month Prayer Times Schedule",
+      "path": "/api/prayer-times/month",
+      "method": "GET",
+      "description": "Returns the entire month schedule of prayer times.",
+      "parameters": [
+        { "name": "lat", "in": "query", "type": "number", "required": true, "example": 51.5074 },
+        { "name": "lng", "in": "query", "type": "number", "required": true, "example": -0.1278 },
+        { "name": "month", "in": "query", "type": "integer", "required": true, "example": 10 },
+        { "name": "year", "in": "query", "type": "integer", "required": true, "example": 2026 },
+        { "name": "method", "in": "query", "type": "string", "required": false }
+      ]
+    },
+    {
+      "name": "Get Calculation Methods",
+      "path": "/api/prayer-times/methods",
+      "method": "GET",
+      "description": "Lists all 23 calculation methods, parameters, and juristic options.",
+      "sampleResponse": {
+        "success": true,
+        "service": "prayer-times/methods",
+        "data": [
+          { "id": "Algeria", "name": "Algerian Ministry of Religious Affairs and Wakfs", "fajrAngle": 18, "ishaAngle": 17, "description": "Algerian Ministry of Religious Affairs and Wakfs. Uses standard Fajr angle of 18° and Isha angle of 17°." },
+          { "id": "MuslimWorldLeague", "name": "Muslim World League", "fajrAngle": 18, "ishaAngle": 17 },
+          { "id": "Egyptian", "name": "Egyptian General Authority of Survey", "fajrAngle": 19.5, "ishaAngle": 17.5 },
+          { "id": "UmmAlQura", "name": "Umm Al-Qura University, Makkah", "fajrAngle": 18.5, "ishaInterval": 90 }
+        ]
+      }
+    },
+    {
+      "name": "Get Ramadan Timetable",
+      "path": "/api/ramadan/{year}",
+      "method": "GET",
+      "description": "Retrieves the full Ramadan fasting and prayer timetable for a given year and location.",
+      "parameters": [
+        { "name": "year", "in": "path", "type": "integer", "required": true, "example": 2026 },
+        { "name": "lat", "in": "query", "type": "number", "required": true, "example": 21.4225 },
+        { "name": "lng", "in": "query", "type": "number", "required": true, "example": 39.8262 }
+      ]
+    },
+    {
+      "name": "Get Qibla Direction",
+      "path": "/api/qibla",
+      "method": "GET",
+      "description": "Calculates the exact compass bearing towards the Kaaba (Makkah) from coordinates.",
+      "parameters": [
+        { "name": "lat", "in": "query", "type": "number", "required": true, "example": 40.7128 },
+        { "name": "lng", "in": "query", "type": "number", "required": true, "example": -74.006 }
+      ],
+      "sampleResponse": {
+        "success": true,
+        "service": "qibla",
+        "data": {
+          "direction": 58.48,
+          "cardinal": "ENE",
+          "distance_km": 10298.5
+        }
+      }
+    },
+    {
+      "name": "Get Today Hijri Date",
+      "path": "/api/today-hijri",
+      "method": "GET",
+      "description": "Fetches current Gregorian date, corresponding Hijri date, month details, and Islamic context.",
+      "sampleResponse": {
+        "success": true,
+        "service": "today-hijri",
+        "data": {
+          "gregorian": {
+            "date": "2026-10-12",
+            "formatted": "Monday, October 12, 2026",
+            "day": 12,
+            "month": 10,
+            "year": 2026
+          },
+          "hijri": {
+            "date": "1448-05-01",
+            "formatted": "01 Jumada al-awwal 1448 AH",
+            "day": 1,
+            "month": 5,
+            "month_name": "Jumada al-awwal",
+            "month_name_arabic": "جمادى الأولى",
+            "year": 1448
+          }
+        }
+      }
+    },
+    {
+      "name": "List All Surahs",
+      "path": "/api/quran/surahs",
+      "method": "GET",
+      "description": "Returns metadata for all 114 Quran chapters (verses count, revelation type, titles, translations)."
+    },
+    {
+      "name": "Get Complete Surah",
+      "path": "/api/quran/surah/{number}",
+      "method": "GET",
+      "description": "Retrieves the full surah text in Arabic with transliteration, translation, and audio URLs.",
+      "parameters": [
+        { "name": "number", "in": "path", "type": "integer", "required": true, "example": 1, "description": "Surah index (1-114)" },
+        { "name": "translation", "in": "query", "type": "string", "required": false, "example": "en.sahih" },
+        { "name": "reciter", "in": "query", "type": "string", "required": false, "example": "alafasy" }
+      ]
+    },
+    {
+      "name": "Get Single Ayah",
+      "path": "/api/quran/surah/{number}/ayah/{ayah}",
+      "method": "GET",
+      "description": "Retrieves a single verse by surah number and ayah number.",
+      "parameters": [
+        { "name": "number", "in": "path", "type": "integer", "required": true, "example": 2 },
+        { "name": "ayah", "in": "path", "type": "integer", "required": true, "example": 255 }
+      ]
+    },
+    {
+      "name": "Word-by-Word Breakdown",
+      "path": "/api/quran/words/{surah}/{ayah}",
+      "method": "GET",
+      "description": "Provides morphology and word-by-word Arabic text, transliteration, and english translation.",
+      "parameters": [
+        { "name": "surah", "in": "path", "type": "integer", "required": true, "example": 1 },
+        { "name": "ayah", "in": "path", "type": "integer", "required": true, "example": 1 }
+      ]
+    },
+    {
+      "name": "Search Quran",
+      "path": "/api/quran/search",
+      "method": "GET",
+      "description": "Search the Quran across Arabic script or translations.",
+      "parameters": [
+        { "name": "q", "in": "query", "type": "string", "required": true, "example": "patience" }
+      ]
+    },
+    {
+      "name": "Get Hadith by Number",
+      "path": "/api/hadith/{collection}/{number}",
+      "method": "GET",
+      "description": "Fetches a specific Hadith from canonical collections.",
+      "parameters": [
+        { "name": "collection", "in": "path", "type": "string", "required": true, "example": "bukhari", "enum": ["bukhari", "muslim", "abudawud", "tirmidhi", "nasai", "ibnmajah"] },
+        { "name": "number", "in": "path", "type": "integer", "required": true, "example": 1 }
+      ]
+    },
+    {
+      "name": "Get Duas & Categories",
+      "path": "/api/duas",
+      "method": "GET",
+      "description": "Retrieves supplications from authentic Sunnah across 27 life categories."
+    },
+    {
+      "name": "Get Random Dua",
+      "path": "/api/duas/random",
+      "method": "GET",
+      "description": "Fetches a random supplication with Arabic text, transliteration, English meaning, and reference."
+    },
+    {
+      "name": "Get 99 Names of Allah",
+      "path": "/api/asma-ul-husna",
+      "method": "GET",
+      "description": "Returns all 99 Names of Allah (Asma ul Husna) with Arabic font, transliteration, and English meanings."
+    },
+    {
+      "name": "Get Single Name of Allah",
+      "path": "/api/asma-ul-husna/{number}",
+      "method": "GET",
+      "description": "Fetches a specific divine name by its rank (1-99).",
+      "parameters": [
+        { "name": "number", "in": "path", "type": "integer", "required": true, "example": 1 }
+      ]
+    },
+    {
+      "name": "Calculate Zakat",
+      "path": "/api/zakat/calculate",
+      "method": "POST",
+      "description": "Calculates obligatory Zakat on cash, gold, silver, investments, and business inventory against active Nisab standards.",
+      "requestBody": {
+        "content": "application/json",
+        "properties": {
+          "currency": { "type": "string", "example": "USD" },
+          "cash": { "type": "number", "example": 5000 },
+          "gold_grams": { "type": "number", "example": 50 },
+          "silver_grams": { "type": "number", "example": 0 },
+          "liabilities": { "type": "number", "example": 500 }
+        }
+      }
+    }
+  ],
+  "mcpEndpoint": {
+    "url": "https://ummahapi.com/mcp",
+    "description": "Model Context Protocol endpoint for connecting AI coding assistants (Claude, Cursor, Copilot, Antigravity) directly to authenticated Islamic data."
+  }
+}
